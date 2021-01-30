@@ -1,0 +1,177 @@
+# Default values for frigate.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# upgrade strategy type (e.g. Recreate or RollingUpdate)
+strategyType: Recreate
+
+image:
+  repository: blakeblackshear/frigate
+  tag: 0.8.0-amd64
+  pullPolicy: IfNotPresent
+
+rtspPassword: password
+
+# secret name containing environment variables for frigate
+extraSecretForEnvFrom: []
+
+coral:
+  enabled: false
+  hostPath: /dev/bus/usb
+
+# Specify image that generates the config folder containing the Frigate config file, masks (if specified), etc.
+initContainer:
+  image:
+    repository: busybox
+    tag: latest
+    pullPolicy: Always
+
+# reference to configMap that contains the binary data of the masks to be copied into the container
+# this requires that generateConfigFolder.enabled = true
+# see https://github.com/blakeblackshear/frigate#masks-and-limiting-detection-to-a-certain-area for more info
+masksConfigMap: {}
+
+extraVolumes: []
+extraVolumeMounts: []
+
+shmSize: 1Gi
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# frigate configuration - see https://blakeblackshear.github.io/frigate/configuration/index for example
+config: |
+  mqtt:
+    # Required: host name
+    host: mqtt.server.com
+    # Optional: port (default: shown below)
+    port: 1883
+    # Optional: topic prefix (default: shown below)
+    # WARNING: must be unique if you are running multiple instances
+    topic_prefix: frigate
+    # Optional: client id (default: shown below)
+    # WARNING: must be unique if you are running multiple instances
+    client_id: frigate
+    # Optional: user
+    user: mqtt_user
+    # Optional: password
+    # NOTE: Environment variables that begin with 'FRIGATE_' may be referenced in {}.
+    #       eg. password: '{FRIGATE_MQTT_PASSWORD}'
+    password: password
+    # Optional: interval in seconds for publishing stats (default: shown below)
+    stats_interval: 60
+
+  detectors:
+    coral:
+      type: edgetpu
+      device: usb
+    # cpu1:
+    #   type: cpu
+
+  # cameras:
+  #   # Name of your camera
+  #   front_door:
+  #     ffmpeg:
+  #       inputs:
+  #         - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+  #           roles:
+  #             - detect
+  #             - rtmp
+  #     width: 1280
+  #     height: 720
+  #     fps: 5
+
+# Probes configuration
+probes:
+  liveness:
+    enabled: true
+    initialDelaySeconds: 30
+    failureThreshold: 5
+    timeoutSeconds: 10
+  readiness:
+    enabled: true
+    initialDelaySeconds: 30
+    failureThreshold: 5
+    timeoutSeconds: 10
+  startup:
+    enabled: false
+    failureThreshold: 30
+    periodSeconds: 10
+
+service:
+  type: ClusterIP
+  port: 5000
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  # nodePort:
+  ## Provide any additional annotations which may be required. This can be used to
+  ## set the LoadBalancer service type to internal only.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+  ##
+  annotations: {}
+  labels: {}
+  ## Use loadBalancerIP to request a specific static IP,
+  ## otherwise leave blank
+  ##
+  loadBalancerIP:
+  # loadBalancerSourceRanges: []
+  ## Set the externalTrafficPolicy in the Service to either Cluster or Local
+  # externalTrafficPolicy: Cluster
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+persistence:
+  data:
+    enabled: false
+    ## frigate configuration data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    ##
+    ## If you want to reuse an existing claim, you can pass the name of the PVC using
+    ## the existingClaim variable
+    # existingClaim: your-claim
+    # subPath: some-subpath
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    ## Do not delete the pvc upon helm uninstall
+    skipuninstall: false
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
