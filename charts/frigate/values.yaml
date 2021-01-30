@@ -9,7 +9,7 @@ strategyType: Recreate
 
 image:
   repository: blakeblackshear/frigate
-  tag: 0.8.0
+  tag: 0.8.0-amd64
   pullPolicy: IfNotPresent
 
 rtspPassword: password
@@ -71,18 +71,18 @@ config: |
     # cpu1:
     #   type: cpu
 
-  cameras:
-    # Name of your camera
-    front_door:
-      ffmpeg:
-        inputs:
-          - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
-            roles:
-              - detect
-              - rtmp
-      width: 1280
-      height: 720
-      fps: 5
+  # cameras:
+  #   # Name of your camera
+  #   front_door:
+  #     ffmpeg:
+  #       inputs:
+  #         - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+  #           roles:
+  #             - detect
+  #             - rtmp
+  #     width: 1280
+  #     height: 720
+  #     fps: 5
 
 # Probes configuration
 probes:
