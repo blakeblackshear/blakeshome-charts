@@ -16,5 +16,5 @@ helm repo add blakeshome https://blakeblackshear.github.io/blakeshome-charts/
 You can then run `helm search repo blakeshome` to see the charts.
 
 ## Charts
-tt
-* [minecraft](https://github.com/blakeblackshear/minecraft-server-charts/tree/master/charts/minecraft)
+
+* [frigate](https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/frigate)
