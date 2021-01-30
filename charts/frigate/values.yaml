@@ -137,7 +137,7 @@ ingress:
 
 persistence:
   data:
-    enabled: true
+    enabled: false
     ## frigate configuration data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
