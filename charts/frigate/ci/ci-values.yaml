@@ -1,0 +1,16 @@
+# Probes configuration
+probes:
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+  startup:
+    enabled: false
+
+config: |
+  mqtt:
+    host: test.mosquitto.org
+    topic_prefix: frigate
+  detectors:
+    cpu1:
+      type: cpu
