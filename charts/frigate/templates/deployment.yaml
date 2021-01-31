@@ -44,8 +44,8 @@ spec:
             - mountPath: /config
               name: config
               readOnly: false
-            - mountPath: /data
-              name: data
+            - mountPath: /media
+              name: media
               readOnly: false
           command: ['sh', '-c']
           args:
@@ -115,8 +115,8 @@ spec:
             {{- end }}
             - mountPath: /config
               name: config
-            - mountPath: /data
-              name: data
+            - mountPath: /media
+              name: media
             - name: dshm
               mountPath: /dev/shm
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
@@ -141,10 +141,10 @@ spec:
           hostPath:
             path: {{ .Values.coral.hostPath }}
         {{- end }}
-        - name: data
-        {{- if .Values.persistence.data.enabled }}
+        - name: media
+        {{- if .Values.persistence.media.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.data.existingClaim }}{{ .Values.persistence.data.existingClaim }}{{- else }}{{ template "frigate.fullname" . }}-data{{- end }}
+            claimName: {{ if .Values.persistence.media.existingClaim }}{{ .Values.persistence.media.existingClaim }}{{- else }}{{ template "frigate.fullname" . }}-media{{- end }}
         {{- else }}
           emptyDir: {}
         {{- end }}

@@ -136,9 +136,9 @@ ingress:
   #      - chart-example.local
 
 persistence:
-  data:
+  media:
     enabled: false
-    ## frigate configuration data Persistent Volume Storage Class
+    ## frigate media Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
