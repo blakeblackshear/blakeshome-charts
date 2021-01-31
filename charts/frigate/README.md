@@ -47,6 +47,8 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Read through the [values.yaml](https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml) file. It has several commented out suggested values.
 
+Also reference https://blakeblackshear.github.io/frigate/configuration/index for detailed frigate configuration settings.
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
