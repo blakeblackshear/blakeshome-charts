@@ -30,30 +30,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      initContainers:
-        - name: config
-          securityContext:
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
-          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
-          volumeMounts:
-            - mountPath: /frigate-config
-              name: configmap
-            - mountPath: /masks
-              name: masks
-            - mountPath: /config
-              name: config
-              readOnly: false
-            - mountPath: /media
-              name: media
-              readOnly: false
-          command: ['sh', '-c']
-          args:
-            - cp /frigate-config/* /config;
-              {{- if .Values.masksConfigMap }}
-              cp /masks/* /config;
-              {{- end }}
-
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -114,7 +90,7 @@ spec:
               name: usb
             {{- end }}
             - mountPath: /config
-              name: config
+              name: configmap
             - mountPath: /media
               name: media
             - name: dshm
@@ -128,14 +104,6 @@ spec:
         - name: configmap
           configMap:
             name: {{ template "frigate.fullname" . }}
-        - name: masks
-          {{- if .Values.masksConfigMap }}
-          configMap:
-            name: {{ .Values.masksConfigMap }}
-          {{- else }}
-          emptyDir:
-            {}
-          {{- end }}
         {{- if .Values.coral.enabled }}
         - name: usb
           hostPath:
