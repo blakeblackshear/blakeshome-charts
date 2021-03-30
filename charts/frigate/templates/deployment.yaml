@@ -124,7 +124,12 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: config
+        {{- if .Values.persistence.config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "frigate.fullname" . }}-config{{- end }}
+        {{- else }}
           emptyDir: {}
+        {{- end }}
         - name: configmap
           configMap:
             name: {{ template "frigate.fullname" . }}
