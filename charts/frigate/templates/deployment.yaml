@@ -97,14 +97,12 @@ spec:
             periodSeconds: {{ .Values.probes.startup.periodSeconds }}
           {{- end }}
           env:
-            {{- if .Values.timezone }}
-            - name: TZ
-              value: "{{ .Values.timezone }}"
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
             {{- end }}
-            - name: FRIGATE_RTSP_PASSWORD
-              value: "{{ .Values.rtspPassword }}"
           envFrom:
-          {{- range .Values.extraSecretForEnvFrom }}
+          {{- range .Values.envFromSecrets }}
             - secretRef:
                 name: {{ . }}
           {{- end }}
