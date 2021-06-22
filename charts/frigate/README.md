@@ -1,64 +1,76 @@
-# Frigate - NVR With Realtime Object Detection for IP Cameras
+# frigate
 
-This is a helm chart for [frigate](https://github.com/blakeblackshear/frigate)
+![Version: 5.0.2](https://img.shields.io/badge/Version-5.0.2-informational?style=flat-square) ![AppVersion: 0.8.0](https://img.shields.io/badge/AppVersion-0.8.0-informational?style=flat-square)
 
-## TL;DR;
+NVR With Realtime Object Detection for IP Cameras
 
-```shell
-$ helm repo add blakeshome https://blakeblackshear.github.io/blakeshome-charts/
-$ helm install blakeshome/frigate
-```
+**Homepage:** <https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/frigate>
 
-## Installing the Chart
+## Maintainers
 
-To install the chart with the release name `frigate`:
+| Name | Email | Url |
+| ---- | ------ | --- |
+| blakeblackshear | blakeb@blakeshome.com |  |
+| billimek | jeff@billimek.com |  |
 
-```console
-helm install frigate blakeshome/frigate
-```
+## Source Code
 
-If using the Coral USB TPU module (strongly recommended), you can use `nodeAffinity` rules to designate which node the pod is scheduled to in order to have host-access to the device, for example:
+* <https://github.com/blakeblackshear/frigate>
 
-```yaml
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: tpu
-          operator: In
-          values:
-          - google-coral
-```
+## Values
 
-... where a node with an attached Coral USB device is labeled with `tpu: google-coral`
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` |  |
+| config | string | `"mqtt:\n  # Required: host name\n  host: mosquitto\n  # Optional: port (default: shown below)\n  port: 1883\n  # Optional: topic prefix (default: shown below)\n  # WARNING: must be unique if you are running multiple instances\n  topic_prefix: frigate\n  # Optional: client id (default: shown below)\n  # WARNING: must be unique if you are running multiple instances\n  client_id: frigate\n  # Optional: user\n  user: mqtt_user\n  # Optional: password\n  # NOTE: Environment variables that begin with 'FRIGATE_' may be referenced in {}.\n  #       eg. password: '{FRIGATE_MQTT_PASSWORD}'\n  password: password\n  # Optional: interval in seconds for publishing stats (default: shown below)\n  stats_interval: 60\n\ndetectors:\n  # coral:\n  #   type: edgetpu\n  #   device: usb\n  cpu1:\n    type: cpu\n\n# cameras:\n#   # Name of your camera\n#   front_door:\n#     ffmpeg:\n#       inputs:\n#         - path: rtsp://{FRIGATE_RSTP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2\n#           roles:\n#             - detect\n#             - rtmp\n#     width: 1280\n#     height: 720\n#     fps: 5\n"` |  |
+| coral.enabled | bool | `false` |  |
+| coral.hostPath | string | `"/dev/bus/usb"` |  |
+| env | list | `[]` |  |
+| envFromSecrets[0] | string | `"frigate-rstp-credentials"` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
+| fullnameOverride | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"blakeblackshear/frigate"` |  |
+| image.tag | string | `"0.8.0-amd64"` |  |
+| imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0] | string | `"chart-example.local"` |  |
+| ingress.path | string | `"/"` |  |
+| ingress.tls | list | `[]` |  |
+| initContainer.image.pullPolicy | string | `"Always"` |  |
+| initContainer.image.repository | string | `"busybox"` |  |
+| initContainer.image.tag | string | `"latest"` |  |
+| masksConfigMap | object | `{}` |  |
+| nameOverride | string | `""` |  |
+| nodeSelector | object | `{}` |  |
+| persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.data.enabled | bool | `false` |  |
+| persistence.data.size | string | `"10Gi"` |  |
+| persistence.data.skipuninstall | bool | `false` |  |
+| podAnnotations | object | `{}` |  |
+| probes.liveness.enabled | bool | `true` |  |
+| probes.liveness.failureThreshold | int | `5` |  |
+| probes.liveness.initialDelaySeconds | int | `30` |  |
+| probes.liveness.timeoutSeconds | int | `10` |  |
+| probes.readiness.enabled | bool | `true` |  |
+| probes.readiness.failureThreshold | int | `5` |  |
+| probes.readiness.initialDelaySeconds | int | `30` |  |
+| probes.readiness.timeoutSeconds | int | `10` |  |
+| probes.startup.enabled | bool | `false` |  |
+| probes.startup.failureThreshold | int | `30` |  |
+| probes.startup.periodSeconds | int | `10` |  |
+| replicaCount | int | `1` |  |
+| resources | object | `{}` |  |
+| service.annotations | object | `{}` |  |
+| service.labels | object | `{}` |  |
+| service.loadBalancerIP | string | `nil` |  |
+| service.port | int | `5000` |  |
+| service.type | string | `"ClusterIP"` |  |
+| shmSize | string | `"1Gi"` |  |
+| strategyType | string | `"Recreate"` |  |
+| tolerations | list | `[]` |  |
 
-## Uninstalling the Chart
-
-To uninstall/delete the `frigate` deployment:
-
-```console
-helm delete frigate
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
-
-## Configuration
-
-Read through the [values.yaml](https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml) file. It has several commented out suggested values.
-
-Also reference https://blakeblackshear.github.io/frigate/configuration/index for detailed frigate configuration settings.
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```console
-helm install frigate \
-  --set rtspPassword="someValue" \
-    blakeshome/frigate
-```
-
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
-
-```console
-helm install --name frigate -f values.yaml blakeshome/frigate
-```
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
