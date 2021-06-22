@@ -12,10 +12,12 @@ image:
   tag: 0.8.0-amd64
   pullPolicy: IfNotPresent
 
-rtspPassword: password
+env: {}
+  # TZ: UTC
 
-# secret name containing environment variables for frigate
-extraSecretForEnvFrom: []
+envFromSecrets: []
+  # secrets are required before `helm install`
+  # - frigate-rstp-credentials
 
 coral:
   enabled: false
@@ -65,18 +67,18 @@ config: |
     stats_interval: 60
 
   detectors:
-    coral:
-      type: edgetpu
-      device: usb
-    # cpu1:
-    #   type: cpu
+    # coral:
+    #   type: edgetpu
+    #   device: usb
+    cpu1:
+      type: cpu
 
   # cameras:
   #   # Name of your camera
   #   front_door:
   #     ffmpeg:
   #       inputs:
-  #         - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+  #         - path: rtsp://{FRIGATE_RSTP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
   #           roles:
   #             - detect
   #             - rtmp
@@ -164,9 +166,11 @@ resources: {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
+  #   gpu.intel.com/i915: 1
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+  #   gpu.intel.com/i915: 1
 
 nodeSelector: {}
 
