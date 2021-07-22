@@ -23,18 +23,6 @@ coral:
   enabled: false
   hostPath: /dev/bus/usb
 
-# Specify image that generates the config folder containing the Frigate config file, masks (if specified), etc.
-initContainer:
-  image:
-    repository: busybox
-    tag: latest
-    pullPolicy: Always
-
-# reference to configMap that contains the binary data of the masks to be copied into the container
-# this requires that generateConfigFolder.enabled = true
-# see https://github.com/blakeblackshear/frigate#masks-and-limiting-detection-to-a-certain-area for more info
-masksConfigMap: {}
-
 extraVolumes: []
 extraVolumeMounts: []
 
