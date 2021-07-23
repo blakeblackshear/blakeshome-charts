@@ -98,8 +98,6 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: config
-          emptyDir: {}
-        - name: configmap
           configMap:
             name: {{ template "frigate.fullname" . }}
         {{- if .Values.coral.enabled }}
