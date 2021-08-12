@@ -126,7 +126,7 @@ ingress:
   #      - chart-example.local
 
 persistence:
-  data:
+  media:
     enabled: false
     ## frigate configuration data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
