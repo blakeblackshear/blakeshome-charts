@@ -1,0 +1,67 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+This Helm Chart installs [Frigate](https://frigate.video/) on to Kubernetes. 
+
+{{ template "chart.homepageLine" . }}
+
+## Install
+
+Using [Helm](https://helm.sh), you can easily install and test Frigate in a 
+Kubernetes cluster by running the following:
+
+#### Add Helm repo
+
+First, add the repo if you haven't already done so:
+```bash
+helm repo add blakeblackshear https://blakeblackshear.github.io/blakeshome-charts/
+```
+
+#### Minimum Config
+
+At minimum, you'll need to define the following Frigate configuration properties. For information, see the [Docs](https://docs.frigate.video/configuration/index).
+
+```yaml
+# values.yaml
+config: |
+  mqtt:
+    host: "mqtt.example.com"
+    port: 1883
+    user: admin
+    password: "<your_mqtt_password>"
+  cameras:
+    # Define at least one camera
+    back:
+      ffmpeg:
+        inputs:
+          - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+            roles:
+              - detect
+              - rtmp
+      detect:
+        width: 1280
+        height: 720
+```
+
+#### Install Chart
+
+Now install the chart:
+```bash
+helm upgrade --install \
+  my-release \
+  blakeblackshear/frigate \
+  -f values.yaml
+```
+
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

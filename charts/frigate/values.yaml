@@ -4,24 +4,33 @@
 
 replicaCount: 1
 
-# upgrade strategy type (e.g. Recreate or RollingUpdate)
+# -- upgrade strategy type (e.g. Recreate or RollingUpdate)
 strategyType: Recreate
 
 image:
+  # -- Docker registry/repository to pull the image from
   repository: blakeblackshear/frigate
   # -- Overrides the default tag (appVersion) used in Chart.yaml
   tag: 0.9.4-amd64
+  # -- Docker image pull policy
   pullPolicy: IfNotPresent
 
+# -- Docker image pull policy
+imagePullSecrets: []
+
+# -- additional ENV variables to set. Prefix with FRIGATE_ to target Frigate configuration values
 env: {}
   # TZ: UTC
 
+# -- set environment variables from Secret(s)
 envFromSecrets: []
   # secrets are required before `helm install`
   # - frigate-rstp-credentials
 
 coral:
+  # -- enables the use of a Coral device
   enabled: false
+  # -- path on the host to which to mount the Coral device
   hostPath: /dev/bus/usb
 
 gpu:
@@ -32,16 +41,21 @@ gpu:
     # -- Overrides the default runtimeClassName
     runtimeClassName:
 
+# -- declare extra volumes to use for Frigate
 extraVolumes: []
+# -- declare additional volume mounts
 extraVolumeMounts: []
 
+# -- amount of shared memory to use for caching
 shmSize: 1Gi
 
-imagePullSecrets: []
+# nameOverride -- Overrides the name of resources
 nameOverride: ""
+
+# fullnameOverride -- Overrides the Full Name of resources
 fullnameOverride: ""
 
-# frigate configuration - see https://blakeblackshear.github.io/frigate/configuration/index for example
+# -- frigate configuration - see [Docs](https://docs.frigate.video/configuration/index) for more info
 config: |
   mqtt:
     # Required: host name
@@ -101,7 +115,9 @@ probes:
     periodSeconds: 10
 
 service:
+  # -- Type of Service to use
   type: ClusterIP
+  # -- Port the Service should communicate on
   port: 5000
   ## Specify the nodePort value for the LoadBalancer and NodePort service types.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -113,23 +129,34 @@ service:
   ##
   annotations: {}
   labels: {}
-  ## Use loadBalancerIP to request a specific static IP,
-  ## otherwise leave blank
-  ##
+
+  # -- Set specific IP address for LoadBalancer. `service.type` must be set to `LoadBalancer`
   loadBalancerIP:
+
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   # externalTrafficPolicy: Cluster
 
 ingress:
+  # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
   enabled: false
+
+  # -- annotations to configure your Ingress. See your Ingress Controller's Docs for more info.
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    # For NGINX INC, these may be neccessary
+    # nginx.org/proxy-read-timeout: "3600"
+    # nginx.org/proxy-send-timeout: "3600"
+    # nginx.org/websocket-services: "<release_name>-frigate" # TODO: can this be automated?
+  
+  # -- list of hosts and their paths that ingress controller should repsond to.
   hosts:
     - host: chart.example.local
       paths:
         - '/'
+  
+  # -- list of TLS configurations
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -137,8 +164,9 @@ ingress:
 
 persistence:
   data:
+    # -- Enables persistence for the data directory
     enabled: false
-    ## frigate configuration data Persistent Volume Storage Class
+    ## frigate data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
@@ -151,16 +179,18 @@ persistence:
     ## the existingClaim variable
     # existingClaim: your-claim
     # subPath: some-subpath
+    
+    # -- [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC
     accessMode: ReadWriteOnce
+
+    # -- size/capacity of the PVC
     size: 10Gi
-    ## Do not delete the pvc upon helm uninstall
+
+    # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
 
+# -- Set resource limits/requests for the Pod(s)
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -170,10 +200,14 @@ resources: {}
   #   memory: 128Mi
   #   gpu.intel.com/i915: 1
 
+# --Node Selector configuration
 nodeSelector: {}
 
+# -- Node toleration configuration
 tolerations: []
 
+# -- Set Pod affinity rules
 affinity: {}
 
+# -- Set additonal pod Annotations
 podAnnotations: {}
