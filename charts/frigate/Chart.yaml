@@ -11,10 +11,6 @@ home: https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/fr
 icon: https://github.com/blakeblackshear/frigate/blob/master/docs/static/img/frigate.png
 sources:
   - https://github.com/blakeblackshear/frigate
-dependencies:
-- name: common
-  version: 3.0.0
-  repository: https://k8s-at-home.com/charts/
 maintainers:
   - name: blakeblackshear
     email: blakeb@blakeshome.com
