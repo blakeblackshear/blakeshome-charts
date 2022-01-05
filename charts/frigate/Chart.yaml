@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "0.9.4"
 description: NVR With Realtime Object Detection for IP Cameras
 name: frigate
-version: 6.1.0
+version: 6.2.0
 keywords:
   - tensorflow
   - coral
