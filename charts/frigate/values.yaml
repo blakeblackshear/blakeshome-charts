@@ -23,6 +23,14 @@ coral:
   enabled: false
   hostPath: /dev/bus/usb
 
+gpu:
+  nvidia:
+    # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
+    enabled: false
+
+    # -- Overrides the default runtimeClassName
+    runtimeClassName:
+
 extraVolumes: []
 extraVolumeMounts: []
 
