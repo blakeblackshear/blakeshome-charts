@@ -5,7 +5,7 @@ metadata:
   labels:
 {{ include "frigate.labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   revisionHistoryLimit: 3
   strategy:
     type: {{ .Values.strategyType }}
