@@ -149,13 +149,13 @@ ingress:
     # nginx.org/proxy-read-timeout: "3600"
     # nginx.org/proxy-send-timeout: "3600"
     # nginx.org/websocket-services: "<release_name>-frigate" # TODO: can this be automated?
-  
+
   # -- list of hosts and their paths that ingress controller should repsond to.
   hosts:
     - host: chart.example.local
       paths:
         - '/'
-  
+
   # -- list of TLS configurations
   tls: []
   #  - secretName: chart-example-tls
@@ -179,7 +179,7 @@ persistence:
     ## the existingClaim variable
     # existingClaim: your-claim
     # subPath: some-subpath
-    
+
     # -- [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC
     accessMode: ReadWriteOnce
 
