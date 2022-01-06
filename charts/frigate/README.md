@@ -108,7 +108,6 @@ helm upgrade --install \
 | probes.startup.enabled | bool | `false` |  |
 | probes.startup.failureThreshold | int | `30` |  |
 | probes.startup.periodSeconds | int | `10` |  |
-| replicaCount | int | `1` |  |
 | resources | object | `{}` | Set resource limits/requests for the Pod(s) |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
