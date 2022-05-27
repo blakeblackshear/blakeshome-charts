@@ -38,7 +38,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ include "frigate.imageTag" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
+            {{- if and .Values.coral.enabled (not .Values.securityContext) }}
             privileged: true
+            {{- else }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 5000

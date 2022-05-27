@@ -8,8 +8,8 @@ strategyType: Recreate
 image:
   # -- Docker registry/repository to pull the image from
   repository: blakeblackshear/frigate
-  # -- Overrides the default tag (appVersion) used in Chart.yaml
-  tag: 0.9.4-amd64
+  # -- Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1))
+  tag: 0.10.1-amd64
   # -- Docker image pull policy
   pullPolicy: IfNotPresent
 
@@ -198,7 +198,17 @@ resources: {}
   #   memory: 128Mi
   #   gpu.intel.com/i915: 1
 
-# --Node Selector configuration
+# -- Set Security Context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  # privileged: true
+
+# -- Node Selector configuration
 nodeSelector: {}
 
 # -- Node toleration configuration
