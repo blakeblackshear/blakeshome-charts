@@ -1,6 +1,6 @@
 # frigate
 
-![Version: 6.3.0](https://img.shields.io/badge/Version-6.3.0-informational?style=flat-square) ![AppVersion: 0.9.4](https://img.shields.io/badge/AppVersion-0.9.4-informational?style=flat-square)
+![Version: 6.3.1](https://img.shields.io/badge/Version-6.3.1-informational?style=flat-square) ![AppVersion: 0.10.1](https://img.shields.io/badge/AppVersion-0.10.1-informational?style=flat-square)
 
 NVR With Realtime Object Detection for IP Cameras
 
@@ -84,14 +84,14 @@ helm upgrade --install \
 | gpu.nvidia.runtimeClassName | string | `nil` | Overrides the default runtimeClassName |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.repository | string | `"blakeblackshear/frigate"` | Docker registry/repository to pull the image from |
-| image.tag | string | `"0.9.4-amd64"` | Overrides the default tag (appVersion) used in Chart.yaml |
+| image.tag | string | `"0.10.1-amd64"` | Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1)) |
 | imagePullSecrets | list | `[]` | Docker image pull policy |
 | ingress.annotations | object | `{}` | annotations to configure your Ingress. See your Ingress Controller's Docs for more info. |
 | ingress.enabled | bool | `false` | Enables the use of an Ingress Controller to front the Service and can provide HTTPS |
 | ingress.hosts | list | `[{"host":"chart.example.local","paths":["/"]}]` | list of hosts and their paths that ingress controller should repsond to. |
 | ingress.tls | list | `[]` | list of TLS configurations |
 | nameOverride | string | `""` | Overrides the name of resources |
-| nodeSelector | object | `{}` |  |
+| nodeSelector | object | `{}` | Node Selector configuration |
 | persistence.data.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
 | persistence.data.enabled | bool | `false` | Enables persistence for the data directory |
 | persistence.data.size | string | `"10Gi"` | size/capacity of the PVC |
@@ -109,6 +109,7 @@ helm upgrade --install \
 | probes.startup.failureThreshold | int | `30` |  |
 | probes.startup.periodSeconds | int | `10` |  |
 | resources | object | `{}` | Set resource limits/requests for the Pod(s) |
+| securityContext | object | `{}` | Set Security Context |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
 | service.loadBalancerIP | string | `nil` | Set specific IP address for LoadBalancer. `service.type` must be set to `LoadBalancer` |
