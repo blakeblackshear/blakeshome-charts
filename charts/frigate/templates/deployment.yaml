@@ -98,7 +98,7 @@ spec:
           volumeMounts:
             {{- if .Values.coral.enabled }}
             - mountPath: {{ .Values.coral.hostPath }}
-              name: coralDev
+              name: coral-dev
             {{- end }}
             - mountPath: /config
               name: config
@@ -120,7 +120,7 @@ spec:
           configMap:
             name: {{ template "frigate.fullname" . }}
         {{- if .Values.coral.enabled }}
-        - name: coralDev
+        - name: coral-dev
           hostPath:
             path: {{ .Values.coral.hostPath }}
         {{- end }}
