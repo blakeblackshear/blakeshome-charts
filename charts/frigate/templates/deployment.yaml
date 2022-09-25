@@ -97,8 +97,8 @@ spec:
           {{- end }}
           volumeMounts:
             {{- if .Values.coral.enabled }}
-            - mountPath: /dev/bus/usb
-              name: usb
+            - mountPath: {{ .Values.coral.hostPath }}
+              name: coralDev
             {{- end }}
             - mountPath: /config
               name: config
@@ -120,7 +120,7 @@ spec:
           configMap:
             name: {{ template "frigate.fullname" . }}
         {{- if .Values.coral.enabled }}
-        - name: usb
+        - name: coralDev
           hostPath:
             path: {{ .Values.coral.hostPath }}
         {{- end }}
