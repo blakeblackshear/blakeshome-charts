@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.0.1] - 2022-10-19
+### Updated
+- `priorityClassName` now configurable
+
 ## [6.3.1] - 2022-05-27
 ### Fixed
 - Frigate container no longer hard-coded to run as root
