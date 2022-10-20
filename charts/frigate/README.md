@@ -118,3 +118,4 @@ helm upgrade --install \
 | shmSize | string | `"1Gi"` | amount of shared memory to use for caching |
 | strategyType | string | `"Recreate"` | upgrade strategy type (e.g. Recreate or RollingUpdate) |
 | tolerations | list | `[]` | Node toleration configuration |
+| priorityClassName | string | `"low-priority"` | specify a priorityClassName for the `frigate` pod. Note that the PriorityClass resource must be created ahead of time. Ref: [Pod Priority & Preemption (Kubernetes docs)](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/) |
