@@ -27,9 +27,9 @@ jobs:
         with:
           version: v3.6.2
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
+      - name: Helm Chart Releaser
+        uses: helm/chart-releaser-action@v1.5.0
         with:
-          charts_repo_url: https://blakeblackshear.github.io/blakeshome-charts
+          charts_repo_url: https://jevy.github.io/blakeshome-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
