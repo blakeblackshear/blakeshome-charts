@@ -55,6 +55,9 @@ fullnameOverride: ""
 
 # -- frigate configuration - see [Docs](https://docs.frigate.video/configuration/index) for more info
 config: |
+  database: 
+    path: /data/frigate.db
+    
   mqtt:
     # Required: host name
     host: mqtt.server.com
@@ -165,6 +168,31 @@ persistence:
     # -- Enables persistence for the data directory
     enabled: false
     ## frigate data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    ##
+    ## If you want to reuse an existing claim, you can pass the name of the PVC using
+    ## the existingClaim variable
+    # existingClaim: your-claim
+    # subPath: some-subpath
+
+    # -- [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC
+    accessMode: ReadWriteOnce
+
+    # -- size/capacity of the PVC
+    size: 10Gi
+
+    # -- Do not delete the pvc upon helm uninstall
+    skipuninstall: false
+  media:
+    # -- Enables persistence for the media directory
+    enabled: false
+    ## frigate media Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
