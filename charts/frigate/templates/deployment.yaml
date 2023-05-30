@@ -104,6 +104,8 @@ spec:
               name: config
             - mountPath: /data
               name: data
+            - mountPath: /media
+              name: media
             - name: dshm
               mountPath: /dev/shm
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
