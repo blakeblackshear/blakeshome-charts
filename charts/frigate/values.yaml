@@ -7,9 +7,9 @@ strategyType: Recreate
 
 image:
   # -- Docker registry/repository to pull the image from
-  repository: blakeblackshear/frigate
+  repository: ghcr.io/blakeblackshear/frigate
   # -- Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1))
-  tag: 0.11.0
+  tag: 0.12.0
   # -- Docker image pull policy
   pullPolicy: IfNotPresent
 
