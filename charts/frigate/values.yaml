@@ -219,3 +219,6 @@ affinity: {}
 
 # -- Set additonal pod Annotations
 podAnnotations: {}
+
+# -- Specify scheduling.k8s.io/PriorityClass name, if applicable. Must have PriorityClass created prior. Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+priorityClassName:
