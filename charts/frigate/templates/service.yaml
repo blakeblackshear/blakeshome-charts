@@ -51,6 +51,14 @@ spec:
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
+    - name: webrtc
+      port: 8555
+      protocl: TCP
+      targetPort: webrtc
+    - name: 8555-udp
+      port: 8555
+      protocl: UDP
+      targetPort: 8555
   selector:
     app.kubernetes.io/name: {{ include "frigate.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
