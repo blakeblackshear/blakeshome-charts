@@ -33,6 +33,22 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      # initContainers:
+      #   - name: "{{ .Chart.Name }}-copy-configmap"
+      #     image: busybox
+      #     imagePullPolicy: IfNotPresent
+      #     command:
+      #       - "sh"
+      #       - "-c"
+      #       - |
+      #         cp /frigate-config/config.yml /config/config.yml
+      #     volumeMounts:
+      #       - name: config
+      #         mountPath: /frigate-config
+      #       - name: config-store
+      #         mountPath: /config
+      #     securityContext:
+      #       runAsUser: 0
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ include "frigate.imageTag" . }}"
@@ -100,7 +116,8 @@ spec:
             - mountPath: {{ .Values.coral.hostPath }}
               name: coral-dev
             {{- end }}
-            - mountPath: /config
+            - mountPath: /config/config.yml
+              subPath: config.yml
               name: config
             - mountPath: /data
               name: data
@@ -119,6 +136,9 @@ spec:
         - name: config
           configMap:
             name: {{ template "frigate.fullname" . }}
+        # - name: config-store
+        #   persistentVolumeClaim:
+        #     claimName: {{ .Values.configExistingClaim }}
         {{- if .Values.coral.enabled }}
         - name: coral-dev
           hostPath:
