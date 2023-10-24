@@ -50,6 +50,9 @@ spec:
             - name: rtmp
               containerPort: 1935
               protocol: TCP
+            - name: rtsp
+              containerPort: 8554
+              protocol: TCP
           {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
             httpGet:
