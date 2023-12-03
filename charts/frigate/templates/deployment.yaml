@@ -127,13 +127,6 @@ spec:
           hostPath:
             path: {{ .Values.coral.hostPath }}
         {{- end }}
-        - name: data
-        {{- if .Values.persistence.data.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.data.existingClaim }}{{ .Values.persistence.data.existingClaim }}{{- else }}{{ template "frigate.fullname" . }}-data{{- end }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
         - name: dshm
           emptyDir:
             medium: Memory
