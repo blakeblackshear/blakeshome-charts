@@ -135,6 +135,11 @@ service:
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   # externalTrafficPolicy: Cluster
 
+  # default IP family to use for the service
+  ipFamilyPolicy: SingleStack
+  # ipFamilies for service
+  ipFamilies: []
+
 ingress:
   # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
   enabled: false

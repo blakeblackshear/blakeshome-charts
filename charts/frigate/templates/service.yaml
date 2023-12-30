@@ -29,6 +29,13 @@ spec:
 {{- else }}
   type: {{ .Values.service.type }}
 {{- end }}
+  ipFamilyPolicy: {{ .Values.service.ipFamilyPolicy }}
+  {{- if .Values.service.ipFamilies }}
+  ipFamilies:
+  {{- range .Values.service.ipFamilies }}
+    - {{ . }}
+  {{- end }}
+  {{- end }}
 {{- if .Values.service.externalIPs }}
   externalIPs:
 {{ toYaml .Values.service.externalIPs | indent 4 }}
