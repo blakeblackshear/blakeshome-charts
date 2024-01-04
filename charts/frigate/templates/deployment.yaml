@@ -103,7 +103,8 @@ spec:
             - mountPath: {{ .Values.coral.hostPath }}
               name: coral-dev
             {{- end }}
-            - mountPath: /config
+            - mountPath: /config/config.yml
+              subPath: config.yml
               name: config
             - mountPath: /data
               name: data
