@@ -194,7 +194,7 @@ persistence:
     accessMode: ReadWriteOnce
 
     # -- size/capacity of the PVC
-    size: 200Mi
+    size: 100Mi
 
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
