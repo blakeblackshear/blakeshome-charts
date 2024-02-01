@@ -103,8 +103,9 @@ spec:
             - mountPath: {{ .Values.coral.hostPath }}
               name: coral-dev
             {{- end }}
-            - mountPath: /config
-              name: config
+            - mountPath: /config/config.yml
+              subPath: config.yml
+              name: configmap
             - mountPath: /data
               name: data
             - mountPath: /media
@@ -121,7 +122,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
             {{- end }}
       volumes:
-        - name: config
+        - name: configmap
           configMap:
             name: {{ template "frigate.fullname" . }}
         {{- if .Values.coral.enabled }}
