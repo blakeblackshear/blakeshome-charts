@@ -106,6 +106,8 @@ spec:
             - mountPath: /config/config.yml
               subPath: config.yml
               name: configmap
+            - mountPath: /config
+              name: config
             - mountPath: /data
               name: data
             - mountPath: /media
@@ -129,6 +131,13 @@ spec:
         - name: coral-dev
           hostPath:
             path: {{ .Values.coral.hostPath }}
+        {{- end }}
+        - name: config
+        {{- if .Values.persistence.config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "frigate.fullname" . }}-config{{- end }}
+        {{- else }}
+          emptyDir: {}
         {{- end }}
         - name: data
         {{- if .Values.persistence.data.enabled }}
