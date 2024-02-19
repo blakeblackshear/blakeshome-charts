@@ -54,3 +54,16 @@ Gets the image Tag to use when pulling the docker image
 {{ .Chart.AppVersion }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Generate resources spec block in order to merge nvidia specific settings with user defined
+*/}}
+{{- define "frigate.resources" -}}
+{{- $resources := .Values.resources | default dict -}}
+{{- $nvidiaresources := dict "nvidia.com/gpu" 1 -}}
+{{- $nvidiaLimits := dict "limits" $nvidiaresources -}}
+{{- if .Values.gpu.nvidia.enabled -}}
+{{- $resources := mergeOverwrite $resources $nvidiaLimits -}}
+{{- end -}}
+{{ $resources | toYaml }}
+{{- end -}}
