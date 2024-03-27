@@ -144,6 +144,9 @@ ingress:
   # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
   enabled: false
 
+  # -- ingressClassName for using on clusters with multiple ingresses, default is null
+  ingressClassName: ~
+
   # -- annotations to configure your Ingress. See your Ingress Controller's Docs for more info.
   annotations: {}
     # kubernetes.io/ingress.class: nginx
