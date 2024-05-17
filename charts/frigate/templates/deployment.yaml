@@ -114,6 +114,10 @@ spec:
               name: media
             - name: dshm
               mountPath: /dev/shm
+            {{- if .Values.tmpfs.enabled }}
+            - name: tmp
+              mountPath: /tmp
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
           resources:
             {{- if .Values.gpu.nvidia.enabled }}
@@ -157,6 +161,12 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: {{ .Values.shmSize }}
+        {{- if .Values.tmpfs.enabled }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: {{ .Values.tmpfs.sizeLimit }}
+        {{- end }}
         {{- if .Values.extraVolumes  }}{{ toYaml .Values.extraVolumes | trim | nindent 8 }}{{ end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -47,6 +47,11 @@ extraVolumeMounts: []
 # -- amount of shared memory to use for caching
 shmSize: 1Gi
 
+# -- use memory for tmpfs (mounted to /tmp)
+tmpfs:
+  enabled: true
+  sizeLimit: 1Gi
+
 # nameOverride -- Overrides the name of resources
 nameOverride: ""
 
