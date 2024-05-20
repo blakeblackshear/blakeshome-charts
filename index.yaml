@@ -2,6 +2,28 @@ apiVersion: v1
 entries:
   frigate:
   - apiVersion: v2
+    appVersion: 0.13.2
+    created: "2024-05-20T09:17:13.154099921Z"
+    description: NVR With Realtime Object Detection for IP Cameras
+    digest: 81731ead13c27b65148db941c4d3f73a438b2562ea46845db8975b365dd297b2
+    home: https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/frigate
+    icon: https://github.com/blakeblackshear/frigate/blob/master/docs/static/img/frigate.png
+    keywords:
+    - tensorflow
+    - coral
+    - ml
+    maintainers:
+    - email: blakeb@blakeshome.com
+      name: blakeblackshear
+    - email: jeff@billimek.com
+      name: billimek
+    name: frigate
+    sources:
+    - https://github.com/blakeblackshear/frigate
+    urls:
+    - https://github.com/blakeblackshear/blakeshome-charts/releases/download/frigate-7.5.1/frigate-7.5.1.tgz
+    version: 7.5.1
+  - apiVersion: v2
     appVersion: 0.13.1
     created: "2024-05-17T10:51:58.215497716Z"
     description: NVR With Realtime Object Detection for IP Cameras
@@ -397,4 +419,4 @@ entries:
     urls:
     - https://github.com/blakeblackshear/blakeshome-charts/releases/download/frigate-5.0.1/frigate-5.0.1.tgz
     version: 5.0.1
-generated: "2024-05-17T10:51:58.215624913Z"
+generated: "2024-05-20T09:17:13.15424818Z"
