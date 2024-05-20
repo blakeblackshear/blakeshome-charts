@@ -89,6 +89,10 @@ spec:
             - name: NVIDIA_VISIBLE_DEVICES
               value: "all"
             {{- end }}
+            {{- if .Values.gpu.nvidia.disableHealthchecks }}
+            - name: DP_DISABLE_HEALTHCHECKS
+              value: "xids"
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}

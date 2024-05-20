@@ -78,6 +78,7 @@ helm upgrade --install \
 | fullnameOverride | string | `""` | Overrides the Full Name of resources |
 | gpu.nvidia.enabled | bool | `false` | Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image |
 | gpu.nvidia.runtimeClassName | string | `nil` | Overrides the default runtimeClassName |
+| gpu.nvidia.disableHealthchecks | bool | `false` | Disable XID errors healthchecks for old NVIDIA GPU compatiblity |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.repository | string | `"ghcr.io/blakeblackshear/frigate"` | Docker registry/repository to pull the image from |
 | image.tag | string | `"0.12.0"` | Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1)) |
