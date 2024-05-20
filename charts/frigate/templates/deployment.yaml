@@ -120,13 +120,7 @@ spec:
             {{- end }}
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
           resources:
-            {{- if .Values.gpu.nvidia.enabled }}
-            limits:
-              "nvidia.com/gpu": 1
-            {{- end }}
-            {{- if .Values.resources }}
-            {{- toYaml .Values.resources | nindent 12 }}
-            {{- end }}
+            {{- include "frigate.resources" . | nindent 12 }}
       volumes:
         - name: configmap
           configMap:
