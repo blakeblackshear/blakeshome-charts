@@ -15,6 +15,9 @@ metadata:
 spec:
   accessModes:
     - {{ .Values.persistence.data.accessMode | quote }}
+  {{- if .Values.persistence.data.volumeName }}
+  volumeName: {{ .Values.persistence.data.volumeName }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.persistence.data.size | quote }}

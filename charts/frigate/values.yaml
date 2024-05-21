@@ -181,6 +181,9 @@ persistence:
     size: 10Gi
     skipuninstall: false
 
+    # -- Existing volumeName, allows binding the PVC created by frigate to an existing volume
+    volumeName: ""
+
   config:
     # -- Enables persistence for the config directory
     enabled: false
@@ -207,6 +210,9 @@ persistence:
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
 
+    # -- Existing volumeName, allows binding the PVC created by frigate to an existing volume
+    volumeName: ""
+
   media:
     # -- Enables persistence for the media directory
     enabled: false
@@ -232,6 +238,9 @@ persistence:
 
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
+
+    # -- Existing volumeName, allows binding the PVC created by frigate to an existing volume
+    volumeName: ""
 
 # -- Set resource limits/requests for the Pod(s)
 resources: {}

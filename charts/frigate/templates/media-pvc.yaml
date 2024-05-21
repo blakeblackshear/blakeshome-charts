@@ -15,6 +15,9 @@ metadata:
 spec:
   accessModes:
     - {{ .Values.persistence.media.accessMode | quote }}
+  {{- if .Values.persistence.media.volumeName }}
+  volumeName: {{ .Values.persistence.media.volumeName }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.persistence.media.size | quote }}

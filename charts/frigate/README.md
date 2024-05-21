@@ -1,6 +1,6 @@
 # frigate
 
-![Version: 7.3.0](https://img.shields.io/badge/Version-7.3.0-informational?style=flat-square) ![AppVersion: 0.13.1](https://img.shields.io/badge/AppVersion-0.13.1-informational?style=flat-square)
+![Version: 7.5.1](https://img.shields.io/badge/Version-7.5.1-informational?style=flat-square) ![AppVersion: 0.13.2](https://img.shields.io/badge/AppVersion-0.13.2-informational?style=flat-square)
 
 NVR With Realtime Object Detection for IP Cameras
 
@@ -40,6 +40,10 @@ config: |
           - path: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
             roles:
               - detect
+              - rtmp
+      detect:
+        width: 1280
+        height: 720
 ```
 
 #### Install Chart
@@ -56,8 +60,8 @@ helm upgrade --install \
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| blakeblackshear | blakeb@blakeshome.com |  |
-| billimek | jeff@billimek.com |  |
+| blakeblackshear | <blakeb@blakeshome.com> |  |
+| billimek | <jeff@billimek.com> |  |
 
 ## Source Code
 
@@ -68,7 +72,7 @@ helm upgrade --install \
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Set Pod affinity rules |
-| config | string | Omitted for brevity. See [values.yaml](./values.yaml). | frigate configuration - see [Docs](https://docs.frigate.video/configuration/index) for more info |
+| config | string | `"mqtt:\n  # Required: host name\n  host: mqtt.server.com\n  # Optional: port (default: shown below)\n  port: 1883\n  # Optional: topic prefix (default: shown below)\n  # WARNING: must be unique if you are running multiple instances\n  topic_prefix: frigate\n  # Optional: client id (default: shown below)\n  # WARNING: must be unique if you are running multiple instances\n  client_id: frigate\n  # Optional: user\n  user: mqtt_user\n  # Optional: password\n  # NOTE: Environment variables that begin with 'FRIGATE_' may be referenced in {}.\n  #       eg. password: '{FRIGATE_MQTT_PASSWORD}'\n  password: password\n  # Optional: interval in seconds for publishing stats (default: shown below)\n  stats_interval: 60\n\ndetectors:\n  # coral:\n  #   type: edgetpu\n  #   device: usb\n  cpu1:\n    type: cpu\n\n# cameras:\n#   # Name of your camera\n#   front_door:\n#     ffmpeg:\n#       inputs:\n#         - path: rtsp://{FRIGATE_RSTP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2\n#           roles:\n#             - detect\n#             - rtmp\n#     width: 1280\n#     height: 720\n#     fps: 5\n"` | frigate configuration - see [Docs](https://docs.frigate.video/configuration/index) for more info |
 | coral.enabled | bool | `false` | enables the use of a Coral device |
 | coral.hostPath | string | `"/dev/bus/usb"` | path on the host to which to mount the Coral device |
 | env | object | `{}` | additional ENV variables to set. Prefix with FRIGATE_ to target Frigate configuration values |
@@ -80,23 +84,30 @@ helm upgrade --install \
 | gpu.nvidia.runtimeClassName | string | `nil` | Overrides the default runtimeClassName |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.repository | string | `"ghcr.io/blakeblackshear/frigate"` | Docker registry/repository to pull the image from |
-| image.tag | string | `"0.12.0"` | Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1)) |
+| image.tag | string | `nil` | Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1)) |
 | imagePullSecrets | list | `[]` | Docker image pull policy |
 | ingress.annotations | object | `{}` | annotations to configure your Ingress. See your Ingress Controller's Docs for more info. |
 | ingress.enabled | bool | `false` | Enables the use of an Ingress Controller to front the Service and can provide HTTPS |
 | ingress.hosts | list | `[{"host":"chart.example.local","paths":["/"]}]` | list of hosts and their paths that ingress controller should repsond to. |
+| ingress.ingressClassName | string | `nil` | ingressClassName for using on clusters with multiple ingresses, default is null |
 | ingress.tls | list | `[]` | list of TLS configurations |
 | nameOverride | string | `""` | Overrides the name of resources |
 | nodeSelector | object | `{}` | Node Selector configuration |
-| persistence.data.* | | | **This config key is obsolete and should not be used. Use `persistence.media.*` and `persistence.config.*` instead.** |
-| persistence.config.enabled | bool | `false` | Enables persistence for the data directory |
-| persistence.config.size | string | `"10Gi"` | size/capacity of the PVC |
-| persistence.config.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.config.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
-| persistence.media.enabled | bool | `false` | Enables persistence for the data directory |
+| persistence.config.enabled | bool | `false` | Enables persistence for the config directory |
+| persistence.config.size | string | `"100Mi"` | size/capacity of the PVC |
+| persistence.config.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
+| persistence.config.volumeName | string | `""` | Existing volumeName, allows binding the PVC created by frigate to an existing volume |
+| persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.data.enabled | bool | `false` |  |
+| persistence.data.size | string | `"10Gi"` |  |
+| persistence.data.skipuninstall | bool | `false` |  |
+| persistence.data.volumeName | string | `""` | Existing volumeName, allows binding the PVC created by frigate to an existing volume |
+| persistence.media.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
+| persistence.media.enabled | bool | `false` | Enables persistence for the media directory |
 | persistence.media.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
-| persistence.media.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
+| persistence.media.volumeName | string | `""` | Existing volumeName, allows binding the PVC created by frigate to an existing volume |
 | podAnnotations | object | `{}` | Set additonal pod Annotations |
 | probes.liveness.enabled | bool | `true` |  |
 | probes.liveness.failureThreshold | int | `5` |  |
@@ -112,10 +123,13 @@ helm upgrade --install \
 | resources | object | `{}` | Set resource limits/requests for the Pod(s) |
 | securityContext | object | `{}` | Set Security Context |
 | service.annotations | object | `{}` |  |
+| service.ipFamilies | list | `[]` |  |
+| service.ipFamilyPolicy | string | `"SingleStack"` |  |
 | service.labels | object | `{}` |  |
 | service.loadBalancerIP | string | `nil` | Set specific IP address for LoadBalancer. `service.type` must be set to `LoadBalancer` |
 | service.port | int | `5000` | Port the Service should communicate on |
 | service.type | string | `"ClusterIP"` | Type of Service to use |
 | shmSize | string | `"1Gi"` | amount of shared memory to use for caching |
 | strategyType | string | `"Recreate"` | upgrade strategy type (e.g. Recreate or RollingUpdate) |
+| tmpfs | object | `{"enabled":true,"sizeLimit":"1Gi"}` | use memory for tmpfs (mounted to /tmp) |
 | tolerations | list | `[]` | Node toleration configuration |
