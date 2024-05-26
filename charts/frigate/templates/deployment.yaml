@@ -53,6 +53,12 @@ spec:
             - name: rtsp
               containerPort: 8554
               protocol: TCP
+            - name: webrtc-udp
+              containerPort: 8555
+              protocol: UDP
+            - name: webrtc-tcp
+              containerPort: 8555
+              protocol: TCP
           {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
             httpGet:
