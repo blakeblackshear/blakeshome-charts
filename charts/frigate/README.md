@@ -93,10 +93,14 @@ helm upgrade --install \
 | persistence.config.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.config.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.config.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
+| persistence.config.labels | object | `{}` | Additional labels for the config PVC |
+| persistence.config.annotations | object | `{}` | Additional annotations for the config PVC |
 | persistence.media.enabled | bool | `false` | Enables persistence for the data directory |
 | persistence.media.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.media.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
+| persistence.media.labels | object | `{}` | Additional labels for the media PVC |
+| persistence.media.annotations | object | `{}` | Additional annotations for the media PVC |
 | podAnnotations | object | `{}` | Set additonal pod Annotations |
 | probes.liveness.enabled | bool | `true` |  |
 | probes.liveness.failureThreshold | int | `5` |  |
