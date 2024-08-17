@@ -85,6 +85,7 @@ helm upgrade --install \
 | ingress.annotations | object | `{}` | annotations to configure your Ingress. See your Ingress Controller's Docs for more info. |
 | ingress.enabled | bool | `false` | Enables the use of an Ingress Controller to front the Service and can provide HTTPS |
 | ingress.hosts | list | `[{"host":"chart.example.local","paths":["/"]}]` | list of hosts and their paths that ingress controller should repsond to. |
+| ingress.service.portName | string | `http-auth` | Points ingress to port where authentication is enforced or anonymous is allowed (`http`). |
 | ingress.tls | list | `[]` | list of TLS configurations |
 | nameOverride | string | `""` | Overrides the name of resources |
 | nodeSelector | object | `{}` | Node Selector configuration |

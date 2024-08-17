@@ -149,6 +149,10 @@ ingress:
   # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
   enabled: false
 
+  # -- Points ingress to port where authentication is enforced or anonymous is allowed (`http`)
+  service:
+    portName: http-auth
+
   # -- ingressClassName for using on clusters with multiple ingresses, default is null
   ingressClassName: ~
 
