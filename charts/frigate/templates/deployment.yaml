@@ -47,6 +47,9 @@ spec:
             - name: http
               containerPort: 5000
               protocol: TCP
+            - name: http-auth 
+              containerPort: 8971
+              protocol: TCP
             - name: rtmp
               containerPort: 1935
               protocol: TCP
