@@ -51,6 +51,10 @@ spec:
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
+    - name: http-auth
+      port: 8971
+      protocol: TCP
+      targetPort: http-auth
     - name: rtmp
       port: 1935
       protocol: TCP
