@@ -209,12 +209,24 @@ persistence:
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
 
+    # -- Additional labels for the PVC
+    labels: {}
+
+    # -- Additional annotations for the PVC
+    annotations: {}
+
   media:
     # -- Enables persistence for the media directory
     enabled: false
     ## frigate data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
+
+    # -- Additional labels for the PVC
+    labels: {}
+
+    # -- Additional annotations for the PVC
+    annotations: {}
     ## If undefined (the default) or set to null, no storageClassName spec is
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
