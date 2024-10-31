@@ -26,8 +26,19 @@ spec:
         {{- end }}
       {{- end }}
     spec:
-      {{- if and .Values.gpu.nvidia.enabled (.Values.gpu.nvidia.runtimeClassName) }}
+      {{- if and .Values.gpu.nvidia.enabled }}
+      {{- if .Values.gpu.nvidia.runtimeClassName }}
       runtimeClassName: {{ .Values.gpu.nvidia.runtimeClassName }}
+      {{- end }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "nvidia.com/gpu.present"
+                operator: In
+                values:
+                - "true"
       {{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
