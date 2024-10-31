@@ -122,8 +122,10 @@ spec:
               mountPath: /tmp
             {{- end }}
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
+          {{- if .Values.resources }}
           resources:
-            {{- include "frigate.resources" . | nindent 12 }}
+                {{- .Values.resources | toYaml | nindent 12 }}
+          {{- end }}
       volumes:
         - name: configmap
           configMap:
