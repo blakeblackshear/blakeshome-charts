@@ -42,6 +42,19 @@ config: |
               - detect
 ```
 
+#### Configuration Updates
+
+Since the config key is stored in a configMap which is mounted as a read-only file, the Frigate UI
+will be unable to update the configuration, and config migration will fail.
+
+If `persistence.config.ephemeralWritableConfigYaml` is set to true along with `persistence.config.enabled`,
+the config.yml will be copied into the /config volume mount rather than mounted into it.
+
+Copying the config file means migrations can run, and updates to settings, zones, etc.. will be
+written to the running configuration. **However** as soon as the pod is restarted, the changes
+will be lost, so you will have to retrieve the config.yml either from the pod, or
+by performing a `GET /api/config` and updating your helm values `config` key with the new yaml.
+
 #### Install Chart
 
 Now install the chart:
