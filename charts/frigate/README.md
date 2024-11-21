@@ -106,6 +106,7 @@ helm upgrade --install \
 | persistence.config.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.config.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.config.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
+| persistence.config.ephemeralWritableConfigYaml | bool | `true` | Copy config into volume mount for writable ephemeral config support |
 | persistence.media.enabled | bool | `false` | Enables persistence for the data directory |
 | persistence.media.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
