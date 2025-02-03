@@ -162,7 +162,7 @@ ingress:
     # nginx.org/websocket-services: "<release_name>-frigate" # TODO: can this be automated?
 
   # -- list of hosts and their paths and ports that ingress controller should repsond to.
-  # -- alternatively use `http` if anonymous auth is allowed 
+  # -- alternatively use `http` if anonymous auth is allowed
   hosts:
     - host: chart.example.local
       paths:
@@ -208,6 +208,12 @@ persistence:
 
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
+
+    ## Copy configMap config into volume to make writable
+    ## All live changes are lost when pod restarts, but this allows
+    ## an easy way to run migrations and edit config, then scrape
+    ## it from the API or copy out of the pod and update local helm values
+    ephemeralWritableConfigYaml: true
 
   media:
     # -- Enables persistence for the media directory
@@ -267,3 +273,6 @@ affinity: {}
 
 # -- Set additonal pod Annotations
 podAnnotations: {}
+
+# -- Define extra init containers
+extraInitContainers: []
