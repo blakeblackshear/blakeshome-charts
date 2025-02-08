@@ -34,7 +34,7 @@ coral:
 gpu:
   nvidia:
     # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
-    enabled: false
+    enabled: true
 
     # -- Overrides the default runtimeClassName
     runtimeClassName:
