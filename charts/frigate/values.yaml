@@ -252,7 +252,7 @@ resources: {}
   #   memory: 128Mi
   #   gpu.intel.com/i915: 1
 
-# -- Set Security Context
+# -- Set Frigate Container Security Context
 securityContext: {}
   # capabilities:
   #   drop:
@@ -260,6 +260,19 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+  # privileged: true
+
+# -- Set Pod level Security Context
+# -- the container level securiy context defined above
+# -- will override it for frigate container
+podSecurityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  # fsGroup: 1000
   # privileged: true
 
 # -- Node Selector configuration
