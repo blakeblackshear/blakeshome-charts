@@ -49,7 +49,7 @@ spec:
             - mountPath: /config
               name: config
           command: [ "cp" ]
-          args: [ "-v", "/config.yml", "/config/config.yaml" ]
+          args: [ "-v", "/config.yml", "/config/config.yml" ]
       {{- end }}
     {{- end }}
       containers:
