@@ -85,6 +85,9 @@ spec:
             - name: webrtc-tcp
               containerPort: 8555
               protocol: TCP
+            - name: go2rtc-admin
+              containerPort: 1984
+              protocol: TCP
           {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
             httpGet:
