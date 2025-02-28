@@ -33,6 +33,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+    {{- end }}
     {{- if or .Values.extraInitContainers (and .Values.persistence.config.enabled .Values.persistence.config.ephemeralWritableConfigYaml) }}
       initContainers:
       {{- with .Values.extraInitContainers }}
