@@ -26,8 +26,19 @@ spec:
         {{- end }}
       {{- end }}
     spec:
-      {{- if and .Values.gpu.nvidia.enabled (.Values.gpu.nvidia.runtimeClassName) }}
+      {{- if and .Values.gpu.nvidia.enabled }}
+      {{- if .Values.gpu.nvidia.runtimeClassName }}
       runtimeClassName: {{ .Values.gpu.nvidia.runtimeClassName }}
+      {{- end }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "nvidia.com/gpu.present"
+                operator: In
+                values:
+                - "true"
       {{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -153,7 +164,7 @@ spec:
             {{- end }}
             {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}{{ end }}
           resources:
-            {{- include "frigate.resources" . | nindent 12 }}
+                {{- .Values.resources | toYaml | nindent 12 }}
       volumes:
         - name: configmap
           configMap:
