@@ -89,11 +89,11 @@ helm upgrade --install \
 | extraVolumeMounts | list | `[]` | declare additional volume mounts |
 | extraVolumes | list | `[]` | declare extra volumes to use for Frigate |
 | fullnameOverride | string | `""` | Overrides the Full Name of resources |
-| gpu.nvidia.enabled | bool | `false` | Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image |
+| gpu.nvidia.enabled | bool | `false` | Enables NVIDIA GPU compatibility. Must also use the "x.x.x-tensorrt" tagged image |
 | gpu.nvidia.runtimeClassName | string | `nil` | Overrides the default runtimeClassName |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.repository | string | `"ghcr.io/blakeblackshear/frigate"` | Docker registry/repository to pull the image from |
-| image.tag | string | `"0.12.0"` | Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1)) |
+| image.tag | string | `"0.12.0"` | Overrides the default tag (appVersion) used in Chart.yaml ([Github](https://github.com/blakeblackshear/frigate/pkgs/container/frigate)). See [the Github release page](https://github.com/blakeblackshear/frigate/releases) for more |
 | imagePullSecrets | list | `[]` | Docker image pull policy |
 | ingress.annotations | object | `{}` | annotations to configure your Ingress. See your Ingress Controller's Docs for more info. |
 | ingress.enabled | bool | `false` | Enables the use of an Ingress Controller to front the Service and can provide HTTPS |

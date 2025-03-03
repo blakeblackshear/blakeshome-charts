@@ -8,7 +8,7 @@ strategyType: Recreate
 image:
   # -- Docker registry/repository to pull the image from
   repository: ghcr.io/blakeblackshear/frigate
-  # -- Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1))
+  # -- Overrides the default tag (appVersion) used in Chart.yaml ([Github](https://github.com/blakeblackshear/frigate/pkgs/container/frigate)). See [the Github release page](https://github.com/blakeblackshear/frigate/releases) for more
   tag:
   # -- Docker image pull policy
   pullPolicy: IfNotPresent
@@ -33,7 +33,7 @@ coral:
 
 gpu:
   nvidia:
-    # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
+    # -- Enables NVIDIA GPU compatibility. Must also use the "x.x.x-tensorrt" tagged image
     enabled: false
 
     # -- Overrides the default runtimeClassName
