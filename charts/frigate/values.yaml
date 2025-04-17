@@ -279,3 +279,5 @@ affinity: {}
 
 # -- Set additonal pod Annotations
 podAnnotations: {}
+# -- Optional Pod priorityClassName; leave null to omit the field (default behavior)
+priorityClassName: null

@@ -26,6 +26,7 @@ At minimum, you'll need to define the following Frigate configuration properties
 
 ```yaml
 # values.yaml
+priorityClassName: null
 config: |
   mqtt:
     host: "mqtt.example.com"
@@ -102,6 +103,7 @@ helm upgrade --install \
 | persistence.media.labels | object | `{}` | Additional labels for the media PVC |
 | persistence.media.annotations | object | `{}` | Additional annotations for the media PVC |
 | podAnnotations | object | `{}` | Set additonal pod Annotations |
+| priorityClassName | string | `nil` | Optional Pod priorityClassName; if unset, field is omitted |
 | probes.liveness.enabled | bool | `true` |  |
 | probes.liveness.failureThreshold | int | `5` |  |
 | probes.liveness.initialDelaySeconds | int | `30` |  |

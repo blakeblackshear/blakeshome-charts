@@ -7,6 +7,9 @@ probes:
   startup:
     enabled: false
 
+# -- Optional Pod priorityClassName; leave null to omit the field (default behavior)
+priorityClassName: null
+
 config: |
   mqtt:
     host: test.mosquitto.org
