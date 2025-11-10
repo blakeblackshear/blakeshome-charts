@@ -10,4 +10,4 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
   config.yml: |
-{{ .Values.config | indent 4 }}
+{{ tpl .Values.config . | indent 4 }}
