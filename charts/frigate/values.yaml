@@ -117,6 +117,33 @@ probes:
     failureThreshold: 30
     periodSeconds: 10
 
+hostPorts:
+
+  http:
+    enabled: false
+    port: 5000
+    #ip: 192.168.1.100
+
+  rtmp:
+    enabled: false
+    port: 1935
+    #ip: 192.168.1.100
+
+  go2rtc:
+    enabled: false
+    port: 1984
+    #ip: 192.168.1.100
+
+  rtsp:
+    enabled: false
+    port: 8554
+    #ip: 192.168.1.100
+
+  webrtc:
+    enabled: false
+    port: 8555
+    #ip: 192.168.1.100
+
 service:
   # -- Type of Service to use
   type: ClusterIP

@@ -67,3 +67,15 @@ Generate resources spec block in order to merge nvidia specific settings with us
 {{- end -}}
 {{ $resources | toYaml }}
 {{- end -}}
+
+{{/*
+Generate hostIP / hostPort settings within container
+*/}}
+{{- define "frigate.hostPort" -}}
+{{- if .enabled }}
+hostPort: {{ .port }}
+{{- if .ip }}
+hostIP: {{ .ip }}
+{{- end -}}
+{{- end -}}
+{{- end -}}

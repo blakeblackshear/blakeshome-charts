@@ -69,24 +69,30 @@ spec:
           ports:
             - name: http
               containerPort: 5000
+              {{- include "frigate.hostPort" .Values.hostPorts.http | nindent 14 }}
               protocol: TCP
             - name: http-auth
               containerPort: 8971
               protocol: TCP
             - name: rtmp
               containerPort: 1935
+              {{- include "frigate.hostPort" .Values.hostPorts.rtmp | nindent 14 }}
               protocol: TCP
             - name: rtsp
               containerPort: 8554
+              {{- include "frigate.hostPort" .Values.hostPorts.rtsp | nindent 14 }}
               protocol: TCP
             - name: webrtc-udp
               containerPort: 8555
+              {{- include "frigate.hostPort" .Values.hostPorts.webrtc | nindent 14 }}
               protocol: UDP
             - name: webrtc-tcp
               containerPort: 8555
+              {{- include "frigate.hostPort" .Values.hostPorts.webrtc | nindent 14 }}
               protocol: TCP
             - name: go2rtc-admin
               containerPort: 1984
+              {{- include "frigate.hostPort" .Values.hostPorts.go2rtc | nindent 14 }}
               protocol: TCP
           {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
