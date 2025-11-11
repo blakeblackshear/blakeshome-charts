@@ -122,7 +122,7 @@ spec:
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: "all"
             - name: NVIDIA_VISIBLE_DEVICES
-              value: "all"
+              value: {{ .Values.gpu.nvidia.gpu }}
             {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}

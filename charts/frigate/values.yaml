@@ -36,6 +36,9 @@ gpu:
     # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
     enabled: false
 
+    # -- Specify which NVIDIA GPU to use. "all", index (as shown in nvidia-smi output) or uuid
+    gpu: "all"
+
     # -- Overrides the default runtimeClassName
     runtimeClassName:
 

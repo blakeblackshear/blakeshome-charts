@@ -90,6 +90,7 @@ helm upgrade --install \
 | extraVolumes | list | `[]` | declare extra volumes to use for Frigate |
 | fullnameOverride | string | `""` | Overrides the Full Name of resources |
 | gpu.nvidia.enabled | bool | `false` | Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image |
+| gpu.nvidia.gpu | string | `"all"` | declare which NVIDIA GPU to use. "all", index (as in output of nvidia-smi) or uuid |
 | gpu.nvidia.runtimeClassName | string | `nil` | Overrides the default runtimeClassName |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.repository | string | `"ghcr.io/blakeblackshear/frigate"` | Docker registry/repository to pull the image from |
