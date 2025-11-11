@@ -35,9 +35,10 @@ gpu:
   nvidia:
     # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
     enabled: false
-
     # -- Overrides the default runtimeClassName
     runtimeClassName:
+    # Disable XID errors healthchecks for old NVIDIA GPU compatiblity 
+    disableHealthchecks: false
 
 # -- declare extra volumes to use for Frigate
 extraVolumes: []
