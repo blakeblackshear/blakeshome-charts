@@ -18,7 +18,7 @@ To install the chart with the release name `frigate`:
 
 ### Create credentials seceret
 ```console
-kc create secret generic frigate-rstp-credentials --from-literal=FRIGATE_RTSP_USERNAME=<username> --from-literal=FRIGATE_RTSP_PASSWORD=<password> -n <namespace>
+kc create secret generic frigate-rtsp-credentials --from-literal=FRIGATE_RTSP_USERNAME=<username> --from-literal=FRIGATE_RTSP_PASSWORD=<password> -n <namespace>
 ```
 
 ### Install MQTT is not already available

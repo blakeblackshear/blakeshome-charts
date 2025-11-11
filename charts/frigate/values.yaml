@@ -23,7 +23,7 @@ env: {}
 # -- set environment variables from Secret(s)
 envFromSecrets: []
   # secrets are required before `helm install`
-  # - frigate-rstp-credentials
+  # - frigate-rtsp-credentials
 
 coral:
   # -- enables the use of a Coral device
@@ -92,7 +92,7 @@ config: |
   #   front_door:
   #     ffmpeg:
   #       inputs:
-  #         - path: rtsp://{FRIGATE_RSTP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+  #         - path: rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
   #           roles:
   #             - detect
   #             - rtmp
