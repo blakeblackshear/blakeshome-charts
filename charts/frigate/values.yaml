@@ -167,6 +167,7 @@ ingress:
     - host: chart.example.local
       paths:
         - path: '/'
+          pathType: "ImplementationSpecific"
           portName: http-auth
 
   # -- list of TLS configurations
