@@ -26,6 +26,7 @@ At minimum, you'll need to define the following Frigate configuration properties
 
 ```yaml
 # values.yaml
+priorityClassName: null
 config: |
   mqtt:
     host: "mqtt.example.com"
@@ -112,6 +113,7 @@ helm upgrade --install \
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.media.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
 | podAnnotations | object | `{}` | Set additonal pod Annotations |
+| priorityClassName | string | `nil` | Optional Pod priorityClassName; if unset, field is omitted |
 | probes.liveness.enabled | bool | `true` |  |
 | probes.liveness.failureThreshold | int | `5` |  |
 | probes.liveness.initialDelaySeconds | int | `30` |  |

@@ -289,3 +289,6 @@ podAnnotations: {}
 
 # -- Define extra init containers
 extraInitContainers: []
+
+# -- Optional Pod priorityClassName; leave null to omit the field (default behavior)
+priorityClassName: null
