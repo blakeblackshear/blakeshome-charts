@@ -60,7 +60,7 @@ Generate resources spec block in order to merge nvidia specific settings with us
 */}}
 {{- define "frigate.resources" -}}
 {{- $resources := .Values.resources | default dict -}}
-{{- $nvidiaresources := dict "nvidia.com/gpu" 1 -}}
+{{- $nvidiaresources := dict "nvidia.com/gpu" "1" -}}
 {{- $nvidiaLimits := dict "limits" $nvidiaresources -}}
 {{- if .Values.gpu.nvidia.enabled -}}
 {{- $resources := mergeOverwrite $resources $nvidiaLimits -}}
