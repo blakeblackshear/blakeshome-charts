@@ -275,6 +275,9 @@ podSecurityContext: {}
   # fsGroup: 1000
   # privileged: true
 
+# -- Set the pod priorityClassName
+priorityClassName: ""
+
 # -- Node Selector configuration
 nodeSelector: {}
 
