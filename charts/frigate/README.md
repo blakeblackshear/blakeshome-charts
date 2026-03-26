@@ -112,6 +112,7 @@ helm upgrade --install \
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.media.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
 | podAnnotations | object | `{}` | Set additonal pod Annotations |
+| priorityClassName | string | `""` | Set the pod priorityClassName |
 | probes.liveness.enabled | bool | `true` |  |
 | probes.liveness.failureThreshold | int | `5` |  |
 | probes.liveness.initialDelaySeconds | int | `30` |  |
