@@ -78,7 +78,7 @@ spec:
     - name: go2rtc-admin
       port: 1984
       protocol: TCP
-      targetPort: webrtc-tcp
+      targetPort: go2rtc-admin
   selector:
     app.kubernetes.io/name: {{ include "frigate.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
