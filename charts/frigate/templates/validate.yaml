@@ -1,0 +1,3 @@
+{{- if and .Values.persistence.config.override (not .Values.persistence.config.enabled) }}
+  {{- fail "persistence.config.override requires persistence.config.enabled=true" }}
+{{- end }}
