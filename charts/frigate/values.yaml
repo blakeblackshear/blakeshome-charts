@@ -209,11 +209,12 @@ persistence:
     # -- Do not delete the pvc upon helm uninstall
     skipuninstall: false
 
-    ## Copy configMap config into volume to make writable
-    ## All live changes are lost when pod restarts, but this allows
-    ## an easy way to run migrations and edit config, then scrape
-    ## it from the API or copy out of the pod and update local helm values
-    ephemeralWritableConfigYaml: true
+    # -- When true, the init container will always overwrite /config/config.yml
+    # -- from Helm values on every pod start. UI changes will be lost on restart.
+    # -- When false (default), config.yml is seeded from Helm values only if it
+    # -- does not already exist, allowing Frigate's UI to manage config persistently.
+    # -- Requires persistence.config.enabled=true.
+    override: false
 
   media:
     # -- Enables persistence for the media directory

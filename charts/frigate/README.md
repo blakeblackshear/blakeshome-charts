@@ -44,16 +44,34 @@ config: |
 
 #### Configuration Updates
 
-Since the config key is stored in a configMap which is mounted as a read-only file, the Frigate UI
-will be unable to update the configuration, and config migration will fail.
+There are three configuration modes, controlled by `persistence.config.enabled` and `persistence.config.override`:
 
-If `persistence.config.ephemeralWritableConfigYaml` is set to true along with `persistence.config.enabled`,
-the config.yml will be copied into the /config volume mount rather than mounted into it.
+| `enabled` | `override` | Behavior |
+|-----------|------------|----------|
+| `false` (default) | — | ConfigMap mounted read-only. Helm is authoritative. Frigate UI cannot save changes. |
+| `true` | `false` (default) | Config is seeded from Helm values on first deploy only (if `/config/config.yml` does not exist). Frigate UI changes persist across restarts and Helm upgrades. |
+| `true` | `true` | Config is always overwritten from Helm values on every pod start. Helm is authoritative. UI changes are lost on restart. |
 
-Copying the config file means migrations can run, and updates to settings, zones, etc.. will be
-written to the running configuration. **However** as soon as the pod is restarted, the changes
-will be lost, so you will have to retrieve the config.yml either from the pod, or
-by performing a `GET /api/config` and updating your helm values `config` key with the new yaml.
+**Recommended setup for UI-managed config:**
+
+```yaml
+persistence:
+  config:
+    enabled: true
+```
+
+With this setup, Frigate's UI can save configuration changes that survive pod restarts and `helm upgrade` runs. The Helm `config` value is only used to seed the initial configuration.
+
+**Keeping Helm authoritative:**
+
+If you prefer Helm to always control the config (e.g. in a GitOps workflow), set `override: true`:
+
+```yaml
+persistence:
+  config:
+    enabled: true
+    override: true
+```
 
 #### Install Chart
 
@@ -106,7 +124,7 @@ helm upgrade --install \
 | persistence.config.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.config.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |
 | persistence.config.accessMode | string | `"ReadWriteOnce"` | [access mode](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to use for the PVC |
-| persistence.config.ephemeralWritableConfigYaml | bool | `true` | Copy config into volume mount for writable ephemeral config support |
+| persistence.config.override | bool | `false` | When true, always overwrite config.yml from Helm values on startup (Helm-authoritative). When false, seed config.yml only if it does not already exist (UI-managed persistent config). |
 | persistence.media.enabled | bool | `false` | Enables persistence for the data directory |
 | persistence.media.size | string | `"10Gi"` | size/capacity of the PVC |
 | persistence.media.skipuninstall | bool | `false` | Do not delete the pvc upon helm uninstall |

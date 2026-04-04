@@ -19,7 +19,9 @@ spec:
         app.kubernetes.io/name: {{ include "frigate.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
+        {{- if not (and .Values.persistence.config.enabled (not .Values.persistence.config.override)) }}
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- end }}
       {{- if .Values.podAnnotations }}
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
@@ -37,23 +39,27 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
     {{- end }}
-    {{- if or .Values.extraInitContainers (and .Values.persistence.config.enabled .Values.persistence.config.ephemeralWritableConfigYaml) }}
+    {{- if or .Values.extraInitContainers .Values.persistence.config.enabled }}
       initContainers:
       {{- with .Values.extraInitContainers }}
         {{ toYaml . | nindent 8 }}
       {{- end }}
-      {{- if and .Values.persistence.config.enabled .Values.persistence.config.ephemeralWritableConfigYaml }}
-        - name: copyconfig
+      {{- if .Values.persistence.config.enabled }}
+        - name: initconfig
           image: "{{ .Values.image.repository }}:{{ include "frigate.imageTag" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-            - mountPath: /config.yml
+            - mountPath: /configmap/config.yml
               subPath: config.yml
               name: configmap
             - mountPath: /config
               name: config
-          command: [ "cp" ]
-          args: [ "-v", "/config.yml", "/config/config.yml" ]
+          command: ["sh", "-c"]
+          {{- if .Values.persistence.config.override }}
+          args: ["cp -v /configmap/config.yml /config/config.yml"]
+          {{- else }}
+          args: ["[ -f /config/config.yml ] || cp -v /configmap/config.yml /config/config.yml"]
+          {{- end }}
       {{- end }}
     {{- end }}
       containers:
@@ -138,7 +144,7 @@ spec:
             - mountPath: {{ .Values.coral.hostPath }}
               name: coral-dev
             {{- end }}
-            {{- if not (and .Values.persistence.config.enabled .Values.persistence.config.ephemeralWritableConfigYaml) }}
+            {{- if not .Values.persistence.config.enabled }}
             - mountPath: /config/config.yml
               subPath: config.yml
               name: configmap
