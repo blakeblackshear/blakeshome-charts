@@ -130,6 +130,11 @@ helm upgrade --install \
 | service.loadBalancerIP | string | `nil` | Set specific IP address for LoadBalancer. `service.type` must be set to `LoadBalancer` |
 | service.port | int | `5000` | Port the Service should communicate on |
 | service.type | string | `"ClusterIP"` | Type of Service to use |
+| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"create":false,"name":""}` | ServiceAccount configuration for the frigate pod |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.automountServiceAccountToken | bool | `true` | Whether the service account token should be automatically mounted |
+| serviceAccount.create | bool | `false` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | shmSize | string | `"1Gi"` | amount of shared memory to use for caching |
 | strategyType | string | `"Recreate"` | upgrade strategy type (e.g. Recreate or RollingUpdate) |
 | tolerations | list | `[]` | Node toleration configuration |

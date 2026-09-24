@@ -289,3 +289,14 @@ podAnnotations: {}
 
 # -- Define extra init containers
 extraInitContainers: []
+
+# -- ServiceAccount configuration for the frigate pod
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+  # -- Whether the service account token should be automatically mounted
+  automountServiceAccountToken: true

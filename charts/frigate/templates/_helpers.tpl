@@ -67,3 +67,14 @@ Generate resources spec block in order to merge nvidia specific settings with us
 {{- end -}}
 {{ $resources | toYaml }}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "frigate.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+{{- default (include "frigate.fullname" .) .Values.serviceAccount.name -}}
+{{- else -}}
+{{- default "default" .Values.serviceAccount.name -}}
+{{- end -}}
+{{- end -}}
