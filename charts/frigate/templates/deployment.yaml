@@ -26,6 +26,9 @@ spec:
         {{- end }}
       {{- end }}
     spec:
+      {{- if or .Values.serviceAccount.create .Values.serviceAccount.name }}
+      serviceAccountName: {{ include "frigate.serviceAccountName" . }}
+      {{- end }}
       {{- if and .Values.gpu.nvidia.enabled (.Values.gpu.nvidia.runtimeClassName) }}
       runtimeClassName: {{ .Values.gpu.nvidia.runtimeClassName }}
       {{- end }}
